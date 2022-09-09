@@ -131,7 +131,7 @@ public class PlayerTest {
         player.play(game1, 3);
         player.play(game2, 5);
 
-        String expected = "Арканоид";
+        Game expected = game2;
         Game actual = player.mostPlayerByGenre("Аркады");
 
         assertEquals(expected, actual);
@@ -158,7 +158,7 @@ public class PlayerTest {
         player.play(game2, 5);
         player.play(game3, 15);
 
-        String expected = "Покорение Марса";
+        Game expected = game2;
         Game actual =  player.mostPlayerByGenre("Аркады");
 
         assertEquals(expected, actual);
@@ -184,5 +184,7 @@ public class PlayerTest {
 
         assertNull(player.mostPlayerByGenre("Квесты"));
     }
+
+    
 
 }
