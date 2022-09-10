@@ -42,10 +42,10 @@ public class GameStoreTest {
 
         store.addPlayTime("Игрок1", 1);
 
-        String expected = "Игрок1";
-        String actual = store.getMostPlayer();
+        String[] expected = {"Игрок1"};
+        String[] actual = store.getMostPlayer();
 
-        Assertions.assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -76,10 +76,10 @@ public class GameStoreTest {
         store.addPlayTime("Игрок2", 100);
         store.addPlayTime("Игрок3", 20);
 
-        String expected = "Игрок1";
-        String actual = store.getMostPlayer();
+        String[] expected = {"Игрок1"};
+        String[] actual = store.getMostPlayer();
 
-        Assertions.assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -88,10 +88,10 @@ public class GameStoreTest {
         store.addPlayTime("Игрок1", 2);
         store.addPlayTime("Игрок2", 3);
 
-        String expected = "Игрок2";
-        String actual = store.getMostPlayer();
+        String[] expected = {"Игрок2"};
+        String[] actual = store.getMostPlayer();
 
-        Assertions.assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -101,10 +101,10 @@ public class GameStoreTest {
         store.addPlayTime("Игрок1", 6);
         store.addPlayTime("Игрок2", 8);
 
-        String expected = "Игрок1";
-        String actual = store.getMostPlayer();
+        String[] expected = {"Игрок1"};
+        String[] actual = store.getMostPlayer();
 
-        Assertions.assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -114,10 +114,10 @@ public class GameStoreTest {
         store.addPlayTime("Игрок1", 0);
         store.addPlayTime("Игрок2", 6);
 
-        String expected = "Игрок2";
-        String actual = store.getMostPlayer();
+        String[] expected = {"Игрок2"};
+        String[] actual = store.getMostPlayer();
 
-        Assertions.assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -151,5 +151,20 @@ public class GameStoreTest {
         int actual = store.getSumPlayedTime();
 
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldShowMostPlayerIfDraw() { // 15. тест на проверку поиска лучшего играка, если у нескольких игроков лучший результат
+
+        store.addPlayTime("Игрок1", 13);
+        store.addPlayTime("Игрок2", 5);
+        store.addPlayTime("Игрок3", 12);
+        store.addPlayTime("Игрок4", 13);
+        store.addPlayTime("Игрок5", 13);
+
+        String[] expected = {"Игрок1", "Игрок4", "Игрок5"};
+        String[] actual = store.getMostPlayer();
+
+        assertArrayEquals(expected, actual);
     }
 }
