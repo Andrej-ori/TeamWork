@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameStoreTest {
 
@@ -162,7 +165,7 @@ public class GameStoreTest {
         store.addPlayTime("Игрок4", 13);
         store.addPlayTime("Игрок5", 13);
 
-        String[] expected = {"Игрок1", "Игрок4", "Игрок5"};
+        String[] expected = {"Игрок4","Игрок1" ,"Игрок5"};
         String[] actual = store.getMostPlayer();
 
         assertArrayEquals(expected, actual);

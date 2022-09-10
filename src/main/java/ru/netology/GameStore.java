@@ -55,17 +55,30 @@ public class GameStore {
      * Ищет имя игрока, который играл в игры этого каталога больше всего
      * времени. Если игроков нет, то возвращется null
      */
-    public String getMostPlayer() {
+    public String[] getMostPlayer() {
         int mostTime = 0;
-        String bestPlayer = null;
+
+        String[] bestPlayers = new String[0];
         for (String playerName : playedTime.keySet()) {
             int playerTime = playedTime.get(playerName);
             if (playerTime > mostTime) {
                 mostTime = playerTime;
-                bestPlayer = playerName;
+
             }
         }
-        return bestPlayer;
+        if (mostTime == 0) {
+            return null;
+        } else {
+            for (String playerName : playedTime.keySet()) {
+                if (playedTime.get(playerName) == mostTime) {
+                    String[] tmp = new String[bestPlayers.length + 1];
+                    System.arraycopy(bestPlayers, 0, tmp, 0, bestPlayers.length);
+                    tmp[tmp.length - 1] = playerName;
+                    bestPlayers = tmp;
+                }
+            }
+        }
+        return bestPlayers;
     }
 
     /**
