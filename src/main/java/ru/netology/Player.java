@@ -1,6 +1,8 @@
 package ru.netology;
 
+
 import java.util.HashMap;
+
 import java.util.Map;
 
 public class Player {
@@ -33,9 +35,9 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game));
+            playedTime.put(game, playedTime.get(game) + hours);
         } else {
-            playedTime.put(game, hours);
+            throw new RuntimeException("Игра не установлена");
         }
         return playedTime.get(game);
     }
@@ -47,8 +49,6 @@ public class Player {
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
                 sum += playedTime.get(game);
-            } else {
-                sum = 0;
             }
         }
         return sum;
@@ -56,7 +56,31 @@ public class Player {
 
     /** Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      Если в игры этого жанра не играли, возвращается null */
-    public Game mostPlayerByGenre(String genre) {
-        return null;
+    public Game[] mostPlayerByGenre(String genre) {
+        int mostTime = 0;
+        for (Game game : playedTime.keySet()) {
+            if (game.getGenre().equals(genre)) {
+                int playerTime = playedTime.get(game);
+                if (playerTime > mostTime) {
+                    mostTime = playerTime;
+                }
+            }
+        }
+        Game[] bestPlayed = new Game[0];
+        if (mostTime == 0) {
+            return null;
+        } else {
+            for (Game game : playedTime.keySet()) {
+                if (playedTime.get(game) == mostTime) {
+                    Game[] tmp = new Game[bestPlayed.length + 1];
+                    for (int i = 0 ; i < bestPlayed.length; i++) {
+                        tmp[i] = bestPlayed[i];
+                    }
+                    tmp[tmp.length - 1] = game;
+                    bestPlayed = tmp;
+                }
+            }
+        }
+        return bestPlayed;
     }
 }
