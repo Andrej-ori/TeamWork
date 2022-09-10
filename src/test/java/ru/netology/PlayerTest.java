@@ -131,21 +131,21 @@ public class PlayerTest {
         player.play(game1, 3);
         player.play(game2, 5);
 
-        Game expected = game2;
-        Game actual = player.mostPlayerByGenre("Аркады");
+        Game[] expected = {game2};
+        Game[] actual = player.mostPlayerByGenre("Аркады");
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test // тест№ 7. Выдает игру заданного жанра "Аркады",
-          // в которую играли бОльшее количество часов, если добавлены несколько игр разного жанра
+          // в которую играли бОльшее количество часов, если добавлены несколько игр разного жанра и играет один игрок
 
-    public void shouldReturnMostPlayedByGenreWhenSomeGamesDifferentGenres() {
+    public void shouldReturnTheMostPopularByGenreWhenSomeGamesOfDifferentGenresArePlayedByTheSamePlayer() {
         
         GameStore store = new GameStore();
 
         Player player = new Player("Petya");
-        
+
         Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
         Game game2 = store.publishGame("Покорение Марса", "Аркады");
         Game game3 = store.publishGame("Формула 1", "Гонки");
@@ -158,10 +158,10 @@ public class PlayerTest {
         player.play(game2, 5);
         player.play(game3, 15);
 
-        Game expected = game2;
-        Game actual =  player.mostPlayerByGenre("Аркады");
+        Game[] expected = {game2};
+        Game[] actual =  player.mostPlayerByGenre("Аркады");
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test // тест №8. Выдает null если в запрашиваемый жанр не играли
@@ -172,6 +172,7 @@ public class PlayerTest {
         GameStore store = new GameStore();
 
         Player player = new Player("Petya");
+
         
         Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
         Game game2 = store.publishGame("Формула 1", "Гонки");
@@ -185,6 +186,30 @@ public class PlayerTest {
         assertNull(player.mostPlayerByGenre("Квесты"));
     }
 
-    
+    @Test// тест№ 9. Выдает игры заданного жанра "Аркады",
+         // в которые играли бОльшее количество часов, если добавлены несколько игр одного жанра, играет один игрок
+    public  void shouldReturnTheMostPopularByGenreIfThereAreSeveral() {
+
+        GameStore store = new GameStore();
+
+        Player player = new Player("Petya");
+
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = store.publishGame("Арканоид", "Аркады");
+        Game game3 = store.publishGame("Покорение Марса", "Аркады");
+
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+
+        player.play(game1, 5);
+        player.play(game2, 2);
+        player.play(game3, 5);
+
+        Game[] expected = {game1, game3};
+        Game[] actual = player.mostPlayerByGenre("Аркады");
+
+        assertArrayEquals(expected, actual);
+    }
 
 }
