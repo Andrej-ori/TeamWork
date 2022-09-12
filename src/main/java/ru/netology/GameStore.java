@@ -1,9 +1,6 @@
 package ru.netology;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameStore {
     private List<Game> games = new ArrayList<>();
@@ -75,6 +72,7 @@ public class GameStore {
                     System.arraycopy(bestPlayers, 0, tmp, 0, bestPlayers.length);
                     tmp[tmp.length - 1] = playerName;
                     bestPlayers = tmp;
+                    Arrays.sort(bestPlayers);
                 }
             }
         }
